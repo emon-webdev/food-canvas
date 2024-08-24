@@ -5,13 +5,16 @@ import {
   RouterProvider
 } from "react-router-dom";
 import './index.css';
+import AuthProvider from './providers/AuthProviders';
 import { router } from './Routes/Routes';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <HelmetProvider>
-      <div className='max-w-screen-xl mx-auto'>
-        <RouterProvider router={router} />
-      </div>
-    </HelmetProvider>
+    <AuthProvider>
+      <HelmetProvider>
+        <div className='max-w-screen-xl mx-auto'>
+          <RouterProvider router={router} />
+        </div>
+      </HelmetProvider>
+    </AuthProvider>
   </StrictMode>,
 )

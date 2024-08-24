@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import SectionTitle from '../../components/SectionTitle';
 import useMenu from '../../hooks/useMenu';
 import Banner from '../Home/Banner';
-import Menuitem from '../Shared/Menuitem/Menuitem';
+import MenuCategory from './MenuCategory';
 
 const Menu = () => {
 
@@ -24,60 +24,35 @@ const Menu = () => {
                 heading={"TODAYS OFFERED"}
             />
             <div className='py-6'>
-                <div className='grid md:grid-cols-2 grid-cols-1 gap-6'>
-                    {offered?.map(item => <Menuitem
-                        key={item._id}
-                        item={item}
-                    />)}
-                </div>
+                <MenuCategory items={offered} />
             </div>
             <SectionTitle
                 subHeading={"Don't Miss"}
                 heading={"DESSERT"}
             />
             <div className='py-6'>
-                <div className='grid md:grid-cols-2 grid-cols-1 gap-6'>
-                    {dessert?.map(item => <Menuitem
-                        key={item._id}
-                        item={item}
-                    />)}
-                </div>
+                <MenuCategory items={dessert} title={"pizza"} />
             </div>
             <SectionTitle
                 subHeading={"Don't Miss"}
                 heading={"SOUP"}
             />
             <div className='py-6'>
-                <div className='grid md:grid-cols-2 grid-cols-1 gap-6'>
-                    {soup?.map(item => <Menuitem
-                        key={item._id}
-                        item={item}
-                    />)}
-                </div>
+                <MenuCategory items={soup} title={"soup"} />
             </div>
             <SectionTitle
                 subHeading={"Don't Miss"}
                 heading={"SALAD"}
             />
             <div className='py-6'>
-                <div className='grid md:grid-cols-2 grid-cols-1 gap-6'>
-                    {salad?.map(item => <Menuitem
-                        key={item._id}
-                        item={item}
-                    />)}
-                </div>
+                <MenuCategory items={salad} title={"salad"} />
             </div>
             <SectionTitle
                 subHeading={"Don't Miss"}
                 heading={"PIZZA"}
             />
             <div className='py-6'>
-                <div className='grid md:grid-cols-2 grid-cols-1 gap-6'>
-                    {pizza?.map(item => <Menuitem
-                        key={item._id}
-                        item={item}
-                    />)}
-                </div>
+                <MenuCategory items={pizza} title={"pizza"} />
             </div>
         </div>
     );
