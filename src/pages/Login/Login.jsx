@@ -1,13 +1,15 @@
 import React, { useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { AuthContext } from '../../providers/AuthProviders';
 // import { AuthContext } from '../../providers/AuthProviders';
 const Login = () => {
 
     const { signIn } = useContext(AuthContext)
-
-
+    const navigate = useNavigate();
+    const location = useLocation()
+    const from = location.state?.from?.pathname || "/";
     const handleLogin = event => {
         event.preventDefault()
         const form = event.target;
@@ -18,6 +20,16 @@ const Login = () => {
             .then((result) => {
                 const user = result.user;
                 console.log(user);
+           
+                Swal.fire({
+                    title: "Login Success",
+                    showClass: {
+                        popup: `
+                        animate__animated
+                      `
+                    },
+                });
+                navigate(from, { replace: true });
             })
             .catch((error) => {
                 const errorMessage = error.message;
@@ -55,7 +67,7 @@ const Login = () => {
                                 <input className="btn btn-primary" type="submit" value="Login" />
                             </div>
                         </form>
-                        <p><small>
+                        <p className='p-12'><small>
                             New Here?
                             <Link to="/signup">
                                 Create an new account

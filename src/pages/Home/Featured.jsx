@@ -1,12 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import featuredImg from "../../assets/images/home/05.png";
 import SectionTitle from '../../components/SectionTitle';
 const Featured = () => {
-    useEffect(() => {
-        fetch()
-            .then(res => res.json())
-            .then(data => console.log(data))
-    }, [])
+
     return (
         <div>
             <SectionTitle
@@ -14,7 +10,7 @@ const Featured = () => {
                 heading={"Featured Item"}
             />
             <div className='py-12'>
-                <img src={featuredImg} alt="" srcset="" />
+                <img src={featuredImg} alt="" srcSet="" />
             </div>
         </div>
     );

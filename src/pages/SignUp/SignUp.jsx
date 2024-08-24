@@ -1,9 +1,12 @@
 import React, { useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { AuthContext } from '../../providers/AuthProviders';
 
 const SignUp = () => {
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -11,33 +14,28 @@ const SignUp = () => {
         reset,
         formState: { errors },
     } = useForm()
-    const { createUser } = useContext(AuthContext)
+    const { createUser, updateUserProfile } = useContext(AuthContext)
     const onSubmit = (data) => {
         console.log(data)
         createUser(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user
                 console.log(loggedUser);
+                updateUserProfile(data.name)
+                    .then(() => {
+                        navigate('/')
+                        reset()
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Sign Up Success",
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }).catch(error => console.log(error))
             })
     }
     console.log(watch("example"))
-
-    // const handleSignUp = event => {
-    //     event.preventDefault() 
-    //     const form = event.target;
-    //     const email = form.email.value
-    //     const password = form.password.value
-    //     console.log(email, password);
-    //     signIn(email, password)
-    //         .then((result) => {
-    //             const user = result.user;
-    //             console.log(user);
-    //         })
-    //         .catch((error) => {
-    //             const errorMessage = error.message;
-    //             console.log(errorMessage);
-    //         });
-    // }
 
 
     return (
@@ -84,7 +82,13 @@ const SignUp = () => {
                             <div className="form-control mt-6">
                                 <input className="btn btn-primary" type="submit" value="Sign Up" />
                             </div>
+
                         </form>
+                        <p className='p-12'><small>
+                            New Here?
+                            <Link to="/login">
+                                Login
+                            </Link></small></p>
                     </div>
                 </div>
             </div>

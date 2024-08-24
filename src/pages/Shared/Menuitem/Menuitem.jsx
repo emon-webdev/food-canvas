@@ -4,7 +4,7 @@ const Menuitem = ({ item }) => {
     const { name, image, price, recipe } = item
     return (
         <div className='flex items-center space-x-4'>
-            <img className='w-[100px] h-[100px] rounded-full' src={image} alt="" srcset="" />
+            <img className='w-[100px] h-[100px] rounded-full' src={image} alt="" srcSet="" />
             <div>
                 <h3>{name}</h3>
                 <p>{recipe}</p>

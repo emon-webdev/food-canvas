@@ -9,7 +9,7 @@ const OrderOnline = () => {
                 subHeading={"ORDER ONLINE"}
             />
             <div className='py-8'>
-                <img src={onlineImg} alt="" srcset="" />
+                <img src={onlineImg} alt="" srcSet="" />
             </div>
         </div>
     );
