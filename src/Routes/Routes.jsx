@@ -3,8 +3,10 @@ import {
 } from "react-router-dom";
 import Main from "../Layout/Main";
 // import { children } from "react";
+import Dashboard from "../Layout/Dashboard";
 import About from "../pages/About/About";
 import Contact from "../pages/About/Contact";
+import Cart from "../pages/Dashboard/Cart";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Menu from "../pages/Menu/Menu";
@@ -46,4 +48,15 @@ export const router = createBrowserRouter([
             },
         ]
     },
+    {
+        path: 'dashboard',
+        element: <Dashboard />,
+        children: [
+            {
+                path: 'cart',
+                element: <Cart />
+            }
+        ]
+
+    }
 ]);
