@@ -3,9 +3,12 @@ import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import SocialLogin from '../../components/SocialLogin';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 import { AuthContext } from '../../providers/AuthProviders';
 
 const SignUp = () => {
+    const axiosPublic = useAxiosPublic()
     const navigate = useNavigate();
     const {
         register,
@@ -23,15 +26,27 @@ const SignUp = () => {
                 console.log(loggedUser);
                 updateUserProfile(data.name)
                     .then(() => {
-                        navigate('/')
-                        reset()
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "Sign Up Success",
-                            showConfirmButton: false,
-                            timer: 1000
-                        });
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email
+                        }
+                        // create user entry in the db
+                        axiosPublic.post('/users', userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    console.log('user added to db')
+                                    navigate('/')
+                                    reset()
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "success",
+                                        title: "Sign Up Success",
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                    });
+                                }
+                            })
+
                     }).catch(error => console.log(error))
             })
     }
@@ -84,11 +99,18 @@ const SignUp = () => {
                             </div>
 
                         </form>
-                        <p className='p-12'><small>
-                            New Here?
-                            <Link to="/login">
-                                Login
-                            </Link></small></p>
+                        <div>
+                            <div className='text-center'>
+                                <SocialLogin />
+                            </div>
+                            <div className='divider mb-0'></div>
+                            <p className='pb-4 text-center'><small>
+                                New Here?
+                                <Link to="/login">
+                                    Login
+                                </Link></small></p>
+                        </div>
+
                     </div>
                 </div>
             </div>

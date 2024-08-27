@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import SocialLogin from '../../components/SocialLogin';
 import { AuthContext } from '../../providers/AuthProviders';
 // import { AuthContext } from '../../providers/AuthProviders';
 const Login = () => {
@@ -20,7 +21,7 @@ const Login = () => {
             .then((result) => {
                 const user = result.user;
                 console.log(user);
-           
+
                 Swal.fire({
                     title: "Login Success",
                     showClass: {
@@ -67,13 +68,20 @@ const Login = () => {
                                 <input className="btn btn-primary" type="submit" value="Login" />
                             </div>
                         </form>
-                        <p className='p-12'><small>
-                            New Here?
-                            <Link to="/signup">
-                                Create an new account
-                            </Link></small></p>
+                        <div>
+                            <div className='text-center'>
+                                <SocialLogin />
+                            </div>
+                            <div className='divider mb-0'></div>
+                            <p className='pb-6 text-center'><small>
+                                New Here?
+                                <Link to="/signup">
+                                    Create an new account
+                                </Link></small></p>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </>
     );

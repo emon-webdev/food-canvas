@@ -6,7 +6,9 @@ import Main from "../Layout/Main";
 import Dashboard from "../Layout/Dashboard";
 import About from "../pages/About/About";
 import Contact from "../pages/About/Contact";
+import AllUsers from "../pages/Dashboard/AllUsers";
 import Cart from "../pages/Dashboard/Cart";
+import ContactPage from "../pages/Dashboard/ContactPage";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Menu from "../pages/Menu/Menu";
@@ -50,13 +52,21 @@ export const router = createBrowserRouter([
     },
     {
         path: 'dashboard',
-        element: <Dashboard />,
+        element: <PrivateRoute><Dashboard /></PrivateRoute>,
         children: [
             {
                 path: 'cart',
                 element: <Cart />
-            }
+            },
+            // admin routes
+            {
+                path: 'allUsers',
+                element: <AllUsers />
+            },
+            {
+                path: 'contact',
+                element: <ContactPage />
+            },
         ]
-
     }
 ]);
