@@ -6,14 +6,18 @@ import Main from "../Layout/Main";
 import Dashboard from "../Layout/Dashboard";
 import About from "../pages/About/About";
 import Contact from "../pages/About/Contact";
+import AddItems from "../pages/Dashboard/AddItems";
 import AllUsers from "../pages/Dashboard/AllUsers";
 import Cart from "../pages/Dashboard/Cart";
 import ContactPage from "../pages/Dashboard/ContactPage";
+import ManageBookings from "../pages/Dashboard/ManageBookings";
+import ManageItems from "../pages/Dashboard/ManageItems";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Menu from "../pages/Menu/Menu";
 import Order from "../pages/OurShop/Order";
 import SignUp from "../pages/SignUp/SignUp";
+import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 export const router = createBrowserRouter([
     {
@@ -60,8 +64,20 @@ export const router = createBrowserRouter([
             },
             // admin routes
             {
+                path: 'addItems',
+                element: <AdminRoute><AddItems /></AdminRoute>
+            },
+            {
+                path: 'manageItems',
+                element: <AdminRoute><ManageItems /></AdminRoute>
+            },
+            {
+                path: 'manageBookings',
+                element: <AdminRoute><ManageBookings /></AdminRoute>
+            },
+            {
                 path: 'allUsers',
-                element: <AllUsers />
+                element: <AdminRoute><AllUsers /></AdminRoute>
             },
             {
                 path: 'contact',
