@@ -1,14 +1,39 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useMenu from '../../hooks/useMenu';
 
 const ManageItems = () => {
-    const [menu] = useMenu()
+    const [menu, loading, refetch] = useMenu()
+    const axiosSecure = useAxiosSecure()
     const handleDelete = (item) => {
         console.log(item)
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosSecure.delete(`/menu/${item._id}`)
+                console.log(res.data)
+                refetch()
+                // if (res.data.deletedCount > 0) {
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+                // }
+            }
+        });
 
     }
     const handleUpdate = (item) => {
-        console.log(item)
 
     }
     return (
@@ -59,9 +84,10 @@ const ManageItems = () => {
                                     </td>
 
                                     <td>
-                                        <button
-                                            onClick={() => handleUpdate(item)}
-                                            className="btn btn-success btn-xs">Update</button>
+                                        <Link to={`/dashboard/updateItem/${item?._id}`}>
+                                            <button
+                                                className="btn btn-success btn-xs">Update</button>
+                                        </Link>
                                     </td>
                                     <td>
                                         <button

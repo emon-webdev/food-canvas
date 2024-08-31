@@ -1,12 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import Swal from 'sweetalert2';
-import SectionTitle from '../../components/SectionTitle';
+import { useLoaderData } from 'react-router-dom';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
-const AddItems = () => {
+
+const UpdateItem = () => {
     const {
         register,
         handleSubmit,
@@ -16,49 +16,18 @@ const AddItems = () => {
     } = useForm()
     const axiosPublic = useAxiosPublic()
     const axiosSecure = useAxiosSecure()
+    const { name, category, price, recipe, image } = useLoaderData()
+    console.log(name, category, price, recipe, image)
+
+
     const onSubmit = async (data) => {
-        console.log(data)
-        //image upload it imgbb and then get and url
-        const imageFile = { image: data.image[0] }
-        const res = await axiosPublic.post(image_hosting_api, imageFile, {
-            headers: {
-                'content-Type': 'multipart/form-data'
-            }
-        })
-        if (res.data.success) {
-            //now send the menu item to the db
-            console.log(res.data)
-            const menuItem = {
-                name: data.name,
-                recipe: data.recipe_details,
-                image: res.data.data.display_url,
-                category: data.category,
-                price: parseFloat(data.price),
-            }
-            //
-            const menuRes = await axiosSecure.post('/menu', menuItem)
-            console.log(menuRes.data)
-            if (menuRes.data.insertedId) {
-                //show success 
-                reset()
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Your work has been saved",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            }
-        }
+   
     }
+
     return (
-        <div className='md:p-12 p-6'>
-            <div>
-                <SectionTitle
-                    heading={"Add an item"}
-                    subHeading={"What's new"}
-                />
-            </div>
+        <div>
+            <h2 className='text-3xl'>Update Item</h2>
+
             <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-control w-full my-6">
@@ -66,6 +35,7 @@ const AddItems = () => {
                             <span className="label-text">Recipe Name</span>
                         </div>
                         <input
+                            defaultValue={name}
                             {...register("name")}
                             type="text" placeholder="Recipe Name"
                             className="input input-bordered w-full" />
@@ -123,4 +93,4 @@ const AddItems = () => {
     );
 };
 
-export default AddItems;
+export default UpdateItem;

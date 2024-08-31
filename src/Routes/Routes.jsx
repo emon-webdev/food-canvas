@@ -12,6 +12,7 @@ import Cart from "../pages/Dashboard/Cart";
 import ContactPage from "../pages/Dashboard/ContactPage";
 import ManageBookings from "../pages/Dashboard/ManageBookings";
 import ManageItems from "../pages/Dashboard/ManageItems";
+import UpdateItem from "../pages/Dashboard/UpdateItem";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Menu from "../pages/Menu/Menu";
@@ -70,6 +71,13 @@ export const router = createBrowserRouter([
             {
                 path: 'manageItems',
                 element: <AdminRoute><ManageItems /></AdminRoute>
+            },
+            {
+                path: 'updateItem/:id',
+                element: <UpdateItem />,
+                loader: async ({ params }) => {
+                    return fetch(`http://localhost:5000/menu`);
+                },
             },
             {
                 path: 'manageBookings',
